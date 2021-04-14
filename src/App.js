@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import SignIn from './pages/SignIn'
+import ThemeProvider from './styles/MuiThemeProvider'
+import { firebase } from './services/firebase'
+import { FirebaseContext } from './context/firebase'
+import { BrowserRouter as Router, Switch } from 'react-router-dom'
+import { IsUserRedirect, PrivateRoute } from './helpers/routes'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <ThemeProvider>
+            <div className="body-wrapper">
+                <Router>
+                    <Switch>
+                        <IsUserRedirect loggedInPath={'/'} path={'/SignIn'}>
+                            <SignIn />
+                        </IsUserRedirect>
+                        <PrivateRoute path={'/'}>
+                            <div>Dashboard</div>
+                        </PrivateRoute>
+                    </Switch>
+                </Router>
+            </div>
+        </ThemeProvider>
+    )
 }
 
-export default App;
+export default function AppWithProvider() {
+    return (
+        <FirebaseContext.Provider value={firebase}>
+            <App />
+        </FirebaseContext.Provider>
+    )
+}
