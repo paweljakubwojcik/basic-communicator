@@ -4,6 +4,7 @@ import { firebase } from './services/firebase'
 import { FirebaseContext } from './context/firebase'
 import { BrowserRouter as Router, Switch } from 'react-router-dom'
 import { IsUserRedirect, PrivateRoute } from './helpers/routes'
+import Dashboard from './pages/Dashboard'
 
 function App() {
     return (
@@ -15,7 +16,7 @@ function App() {
                             <SignIn />
                         </IsUserRedirect>
                         <PrivateRoute path={'/'}>
-                            <div>Dashboard</div>
+                            <Dashboard />
                         </PrivateRoute>
                     </Switch>
                 </Router>
